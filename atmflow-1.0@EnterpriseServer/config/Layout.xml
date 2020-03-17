@@ -7,6 +7,7 @@
     <service-instance name="WebServiceConsumer1" x="514" y="148"/>
     <service-instance name="EMP" x="338" y="130"/>
     <service-instance name="WebServiceConsumer2" x="399" y="260"/>
+    <service-instance name="WebServiceConsumer3" x="178" y="77"/>
   </subflow>
   <shortcut-routes/>
 </layout>

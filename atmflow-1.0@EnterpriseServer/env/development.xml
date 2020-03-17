@@ -78,4 +78,30 @@
       <target:property encrypt="false" name="Port Name" type="java.lang.String">getAccountHistoryMovementListPortType</target:property>
     </target:configuration-properties>
   </target:instance>
+  <target:instance name="WebServiceConsumer3">
+    <target:instance-properties>
+      <target:deployment cache="true" nodes="fps"/>
+    </target:instance-properties>
+    <target:configuration-properties>
+      <target:property encrypt="false" name="HTTPAuthConfiguration" type="NamedObject">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?>
+&lt;ns1:namedConfiguration ns1:CLASS_NAME=&quot;com.fiorano.services.common.security.HTTPAuthConfiguration&quot; xmlns:ns1=&quot;uri:com.fiorano.services.common.security&quot;>
+    &lt;ns1:passwordFromVault>false&lt;/ns1:passwordFromVault>
+    &lt;ns1:customPasswordEncryption>false&lt;/ns1:customPasswordEncryption>
+    &lt;ns1:useHTTPAuth>true&lt;/ns1:useHTTPAuth>
+    &lt;ns1:type>BASIC&lt;/ns1:type>
+    &lt;ns1:username>admin&lt;/ns1:username>
+    &lt;ns1:password>fIdBh3komne+sg7IztHdjw==&lt;/ns1:password>
+    &lt;ns1:hostname>&lt;/ns1:hostname>
+    &lt;ns1:port>80&lt;/ns1:port>
+    &lt;ns1:domain>&lt;/ns1:domain>
+    &lt;ns1:realm>&lt;/ns1:realm>
+&lt;/ns1:namedConfiguration>
+</target:property>
+      <target:property encrypt="true" name="HTTP Password" type="java.lang.String">dtW+exdD7mTABSC6yYeiVV3ZSyBADTZXOJHQpfWjUT8=</target:property>
+      <target:property encrypt="false" name="HTTP Basic Authentication" type="java.lang.Boolean">true</target:property>
+      <target:property encrypt="false" name="HTTP Username" type="java.lang.String">admin</target:property>
+      <target:property encrypt="false" name="End Point Address" type="java.lang.String">https://10.102.149.195:9095/getAccountHistoryMovementList</target:property>
+      <target:property encrypt="false" name="Port Name" type="java.lang.String">getAccountHistoryMovementListPortType</target:property>
+    </target:configuration-properties>
+  </target:instance>
 </target:target>

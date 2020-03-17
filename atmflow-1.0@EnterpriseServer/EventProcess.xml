@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <application guid="ATMFLOW" version="1.0">
   <display categories="BOK" name="ATMflow"/>
-  <creation authors="eStudio" date="20-03-2017 03:01:35" lastModifiedDate="17-03-2020 12:00:22"/>
+  <creation authors="eStudio" date="20-03-2017 03:01:35" lastModifiedDate="17-03-2020 12:02:26"/>
   <deployment label="Development"/>
   <service-instances>
     <inst name="ATMListner">
@@ -458,6 +458,103 @@
           <workflow datatype="2" type="1" enablecallout="false"/>
           <schema root="{http://www.fiorano.com/fesb/activity/fault}Error">
             <file>WebServiceConsumer2.ON_EXCEPTION.xsd</file>
+          </schema>
+          <jms>
+            <destination/>
+            <publisher>
+              <messages persistent="true"/>
+            </publisher>
+          </jms>
+        </outputport-instance>
+      </outputport-instances>
+      <logmanager logger="java.util.logging.FileHandler">
+        <Param name="java.util.logging.FileHandler.limit">1000000</Param>
+        <Param name="java.util.logging.FileHandler.dir">logs</Param>
+        <Param name="fiorano.jms.log2.def.DefaultFormatter.dateformat">MM/dd/yyyy HH:mm:ss</Param>
+        <Param name="java.util.logging.FileHandler.count">4</Param>
+        <Param name="fiorano.jms.log2.def.DefaultFormatter.includetimestamp">true</Param>
+      </logmanager>
+      <logmodules>
+        <logmodule level="OFF" name="com.fiorano.services.customencryption" uniqueNameRequired="true"/>
+        <logmodule name="com.fiorano.bc.trgateway" uniqueNameRequired="true"/>
+        <logmodule name="com.fiorano.webservices.invoker.cci.WSInvokerInteraction" uniqueNameRequired="true"/>
+        <logmodule name="fiorano.esb.adapter.jca.dii.webserviceconsumer.monitor" uniqueNameRequired="true"/>
+        <logmodule level="INFO" name="OUT_HANDLER" uniqueNameRequired="true"/>
+        <logmodule name="com.fiorano.webservices.invoker.spi.outbound.WSInvokerManagedConnectionFactory" uniqueNameRequired="true"/>
+        <logmodule name="ERR_HANDLER" uniqueNameRequired="true"/>
+      </logmodules>
+      <runtime-arguments>
+        <runtime-argument inmemory="false" mandatory="false" name="JVM_PARAMS">
+          <value> -client -DLOG_TO_STREAM=true -Xrs</value>
+        </runtime-argument>
+        <runtime-argument inmemory="false" mandatory="false" name="JAVA_HOME"/>
+      </runtime-arguments>
+      <servicerefs/>
+    </inst>
+    <inst name="WebServiceConsumer3">
+      <service guid="WebServiceConsumer" version="4.0"/>
+      <short-description>This component invokes a web service (usually externally hosted on a third-party system) based on the configured WSDL</short-description>
+      <long-description>This component invokes a web service (usually externally hosted on a third-party system) based on the configured WSDL</long-description>
+      <config-file name="WebServiceConsumer3.xml"/>
+      <resource-properties>
+        <resource-property name="End Point Address">https://10.102.149.195:9095/getAccountHistoryMovementList</resource-property>
+        <resource-property name="HTTP Password">fIdBh3komne+sg7IztHdjw==</resource-property>
+        <resource-property name="HTTP Basic Authentication">true</resource-property>
+        <resource-property name="Operation Name">getAccountHistoryMovementList</resource-property>
+        <resource-property name="HTTP Username">admin</resource-property>
+        <resource-property name="WSDL URL">https://10.102.149.195:9095/getAccountHistoryMovementList?wsdl</resource-property>
+      </resource-properties>
+      <deployment nodes="fps"/>
+      <execution>
+        <debug enabled="false" port="5000"/>
+        <launchOrder-Sequence sequence="-1"/>
+        <stopOrder-Sequence sequence="-1"/>
+      </execution>
+      <inputport-instances>
+        <inputport-instance name="IN_PORT">
+          <description>Takes input xml required by WS</description>
+          <workflow datatype="2" type="0" enablecallout="false"/>
+          <schema root="{http://soprabanking.com/amplitude/getAccountHistoryMovementList/Input}Envelope">
+            <file>IN_PORT0.xsd</file>
+            <schemarefs>
+              <schemaref uri="http://soprabanking.com/amplitude">
+                <file>IN_PORT6.xsd</file>
+              </schemaref>
+            </schemarefs>
+          </schema>
+          <jms>
+            <destination/>
+            <subscriber>
+              <transaction enabled="false"/>
+              <subscription durable="false"/>
+            </subscriber>
+          </jms>
+        </inputport-instance>
+      </inputport-instances>
+      <outputport-instances>
+        <outputport-instance name="OUT_PORT">
+          <description>Gives the output of WS in XML format</description>
+          <workflow datatype="2" type="0" enablecallout="false"/>
+          <schema root="{http://soprabanking.com/amplitude/getAccountHistoryMovementList/Output}Envelope">
+            <file>OUT_PORT2.xsd</file>
+            <schemarefs>
+              <schemaref uri="http://soprabanking.com/amplitude">
+                <file>IN_PORT6.xsd</file>
+              </schemaref>
+            </schemarefs>
+          </schema>
+          <jms>
+            <destination/>
+            <publisher>
+              <messages persistent="true"/>
+            </publisher>
+          </jms>
+        </outputport-instance>
+        <outputport-instance name="ON_EXCEPTION">
+          <description>Used as an Exception Port</description>
+          <workflow datatype="2" type="1" enablecallout="false"/>
+          <schema root="{http://www.fiorano.com/fesb/activity/fault}Error">
+            <file>ON_EXCEPTION0.xsd</file>
           </schema>
           <jms>
             <destination/>
