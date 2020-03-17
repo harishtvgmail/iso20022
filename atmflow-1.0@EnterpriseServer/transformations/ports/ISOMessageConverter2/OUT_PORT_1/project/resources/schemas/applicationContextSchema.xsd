@@ -1,0 +1,31 @@
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.fiorano.com/fesb/activity/ISOMessage" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="ISOMessage">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element type="xs:short" name="MTI"/>
+        <xs:element name="Fields">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:long" name="field_2"/>
+              <xs:element type="xs:int" name="field_3"/>
+              <xs:element type="xs:byte" name="field_4"/>
+              <xs:element type="xs:int" name="field_7"/>
+              <xs:element type="xs:int" name="field_11"/>
+              <xs:element type="xs:int" name="field_12"/>
+              <xs:element type="xs:short" name="field_13"/>
+              <xs:element type="xs:short" name="field_15"/>
+              <xs:element type="xs:int" name="field_32"/>
+              <xs:element type="xs:long" name="field_37"/>
+              <xs:element type="xs:float" name="field_41"/>
+              <xs:element type="xs:long" name="field_42"/>
+              <xs:element type="xs:string" name="field_43"/>
+              <xs:element type="xs:short" name="field_49"/>
+              <xs:element type="xs:long" name="field_102"/>
+              <xs:element type="xs:long" name="field_103"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

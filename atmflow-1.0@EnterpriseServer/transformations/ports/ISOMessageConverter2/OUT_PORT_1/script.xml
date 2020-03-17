@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsl:stylesheet version="1.0" xmlns:datetime="http://exslt.org/dates-and-times" xmlns:set="http://exslt.org/sets" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:math="http://exslt.org/math" xmlns:lxslt="http://xml.apache.org/xslt" xmlns:xalan="http://xml.apache.org/xslt" xmlns:java="http://xml.apache.org/xslt/java" exclude-result-prefixes="xalan java lxslt" xmlns:ns3="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://www.fiorano.com/fesb/activity/ISOMessage" xmlns:dateConversion="ext1" xmlns:myext="ext2" xmlns:strings="ext3" extension-element-prefixes="datetime set math dateConversion myext strings">
+  <xsl:output method="xml" indent="yes" encoding="UTF-8" xalan:indent-amount="2" omit-xml-declaration="no"></xsl:output>
+  <xsl:variable name="document" select="/"></xsl:variable>
+  <xsl:variable name="document_OUT_PORT_1" select="document('OUT_PORT_1')"></xsl:variable>
+  <xsl:template match="/">
+    <ns2:ISOMessage>
+      <ns2:MTI>
+        <xsl:value-of select="$document_OUT_PORT_1/ns2:ISOMessage/ns2:MTI"></xsl:value-of>
+      </ns2:MTI>
+      <ns2:Fields>
+        <ns2:field_2>
+          <xsl:value-of select="$document_OUT_PORT_1/ns2:ISOMessage/ns2:Fields/ns2:field_2"></xsl:value-of>
+        </ns2:field_2>
+        <ns2:field_3>
+          <xsl:value-of select="$document_OUT_PORT_1/ns2:ISOMessage/ns2:Fields/ns2:field_3"></xsl:value-of>
+        </ns2:field_3>
+        <ns2:field_4>
+          <xsl:value-of select="$document_OUT_PORT_1/ns2:ISOMessage/ns2:Fields/ns2:field_4"></xsl:value-of>
+        </ns2:field_4>
+        <ns2:field_7>
+          <xsl:value-of select="$document_OUT_PORT_1/ns2:ISOMessage/ns2:Fields/ns2:field_7"></xsl:value-of>
+        </ns2:field_7>
+        <ns2:field_11>
+          <xsl:value-of select="$document_OUT_PORT_1/ns2:ISOMessage/ns2:Fields/ns2:field_11"></xsl:value-of>
+        </ns2:field_11>
+        <ns2:field_12>
+          <xsl:value-of select="$document_OUT_PORT_1/ns2:ISOMessage/ns2:Fields/ns2:field_12"></xsl:value-of>
+        </ns2:field_12>
+        <ns2:field_13>
+          <xsl:value-of select="$document_OUT_PORT_1/ns2:ISOMessage/ns2:Fields/ns2:field_13"></xsl:value-of>
+        </ns2:field_13>
+        <ns2:field_15>
+          <xsl:value-of select="$document_OUT_PORT_1/ns2:ISOMessage/ns2:Fields/ns2:field_15"></xsl:value-of>
+        </ns2:field_15>
+        <ns2:field_32>
+          <xsl:value-of select="$document_OUT_PORT_1/ns2:ISOMessage/ns2:Fields/ns2:field_32"></xsl:value-of>
+        </ns2:field_32>
+        <ns2:field_37>
+          <xsl:value-of select="$document_OUT_PORT_1/ns2:ISOMessage/ns2:Fields/ns2:field_37"></xsl:value-of>
+        </ns2:field_37>
+        <ns2:field_41>
+          <xsl:value-of select="$document_OUT_PORT_1/ns2:ISOMessage/ns2:Fields/ns2:field_41"></xsl:value-of>
+        </ns2:field_41>
+        <ns2:field_42>
+          <xsl:value-of select="$document_OUT_PORT_1/ns2:ISOMessage/ns2:Fields/ns2:field_42"></xsl:value-of>
+        </ns2:field_42>
+        <ns2:field_43>
+          <xsl:value-of select="$document_OUT_PORT_1/ns2:ISOMessage/ns2:Fields/ns2:field_43"></xsl:value-of>
+        </ns2:field_43>
+        <ns2:field_49>
+          <xsl:value-of select="$document_OUT_PORT_1/ns2:ISOMessage/ns2:Fields/ns2:field_49"></xsl:value-of>
+        </ns2:field_49>
+        <ns2:field_102>
+          <xsl:value-of select="$document_OUT_PORT_1/ns2:ISOMessage/ns2:Fields/ns2:field_102"></xsl:value-of>
+        </ns2:field_102>
+        <ns2:field_103>
+          <xsl:value-of select="$document_OUT_PORT_1/ns2:ISOMessage/ns2:Fields/ns2:field_103"></xsl:value-of>
+        </ns2:field_103>
+      </ns2:Fields>
+    </ns2:ISOMessage>
+  </xsl:template>
+</xsl:stylesheet>

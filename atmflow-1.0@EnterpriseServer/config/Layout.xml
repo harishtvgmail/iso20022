@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="ASCII"?>
+<layout>
+  <subflow name="FIORANO.ESTUDIO.ROOT_FLOW" x="0" y="0">
+    <service-instance name="ATMListner" x="46" y="190"/>
+    <service-instance name="ISOMessageConverter2" x="219" y="145"/>
+    <service-instance name="ISOMessageConverter1" x="406" y="-7"/>
+    <service-instance name="WebServiceConsumer1" x="514" y="148"/>
+    <service-instance name="EMP" x="338" y="130"/>
+    <service-instance name="WebServiceConsumer2" x="399" y="260"/>
+  </subflow>
+  <shortcut-routes/>
+</layout>

@@ -1,0 +1,550 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application guid="ATMFLOW" version="1.0">
+  <display categories="BOK" name="ATMflow"/>
+  <creation authors="eStudio" date="20-03-2017 03:01:35" lastModifiedDate="17-03-2020 12:00:22"/>
+  <deployment label="Development"/>
+  <service-instances>
+    <inst name="ATMListner">
+      <service guid="SocketAdapter" version="4.0"/>
+      <short-description>Component to send messages to a socket and receive messages from a socket</short-description>
+      <config-file name="ATMListner.xml"/>
+      <resource-properties>
+        <resource-property name="Server IP">127.0.0.1</resource-property>
+        <resource-property name="PORT">5436</resource-property>
+      </resource-properties>
+      <deployment nodes="fps"/>
+      <execution>
+        <debug enabled="false" port="5000" suspend="false"/>
+        <launchOrder-Sequence sequence="-1"/>
+        <stopOrder-Sequence sequence="-1"/>
+      </execution>
+      <inputport-instances>
+        <inputport-instance name="IN_PORT">
+          <description>Content on Input port is written to Socket</description>
+          <workflow datatype="2" type="2" enablecallout="false"/>
+          <jms>
+            <destination/>
+            <subscriber>
+              <transaction enabled="false"/>
+              <subscription durable="false"/>
+            </subscriber>
+          </jms>
+        </inputport-instance>
+      </inputport-instances>
+      <outputport-instances>
+        <outputport-instance name="STATUS_PORT">
+          <description>Sends confirmation that the message is written successfully</description>
+          <workflow datatype="2" type="0" enablecallout="false"/>
+          <schema root="{http://www.fiorano.com/fesb/activity/SocketAdapter/status}SocketAdapter">
+            <file>ATMListner.STATUS_PORT.xsd</file>
+          </schema>
+          <jms>
+            <destination/>
+            <publisher>
+              <messages persistent="true"/>
+            </publisher>
+          </jms>
+        </outputport-instance>
+        <outputport-instance name="OUT_PORT">
+          <description>Content on Socket is written to Output port</description>
+          <workflow datatype="2" type="1" enablecallout="false"/>
+          <jms>
+            <destination/>
+            <publisher>
+              <messages persistent="true"/>
+            </publisher>
+          </jms>
+        </outputport-instance>
+        <outputport-instance name="ON_EXCEPTION">
+          <description>Used as an Exception Port</description>
+          <workflow datatype="2" type="1" enablecallout="false"/>
+          <schema root="{http://www.fiorano.com/fesb/activity/fault}Error">
+            <file>ATMListner.ON_EXCEPTION.xsd</file>
+          </schema>
+          <jms>
+            <destination/>
+            <publisher>
+              <messages persistent="true"/>
+            </publisher>
+          </jms>
+        </outputport-instance>
+      </outputport-instances>
+      <logmanager logger="java.util.logging.FileHandler">
+        <Param name="java.util.logging.FileHandler.limit">1000000</Param>
+        <Param name="java.util.logging.FileHandler.dir">logs</Param>
+        <Param name="fiorano.jms.log2.def.DefaultFormatter.dateformat">MM/dd/yyyy HH:mm:ss</Param>
+        <Param name="java.util.logging.FileHandler.count">4</Param>
+        <Param name="fiorano.jms.log2.def.DefaultFormatter.includetimestamp">true</Param>
+      </logmanager>
+      <logmodules>
+        <logmodule level="WARNING" name="ERR_HANDLER" uniqueNameRequired="true"/>
+        <logmodule level="INFO" name="OUT_HANDLER" uniqueNameRequired="true"/>
+        <logmodule level="WARNING" name="com.fiorano.services.socketadapter.SocketAdapterService" uniqueNameRequired="true"/>
+        <logmodule level="WARNING" name="com.fiorano.services.socketadapter.transport.jms" uniqueNameRequired="true"/>
+        <logmodule level="WARNING" name="com.fiorano.services.socketadapter.engine" uniqueNameRequired="true"/>
+      </logmodules>
+      <runtime-arguments>
+        <runtime-argument mandatory="false" name="JVM_PARAMS">
+          <value> -client -DLOG_TO_STREAM=true -Xrs</value>
+        </runtime-argument>
+        <runtime-argument inmemory="false" mandatory="false" name="JAVA_HOME"/>
+      </runtime-arguments>
+      <servicerefs/>
+    </inst>
+    <inst name="ISOMessageConverter2">
+      <service guid="ISOMessageConverter" version="1.0"/>
+      <config-file name="ISOMessageConverter2.xml"/>
+      <deployment nodes="fps"/>
+      <execution>
+        <debug enabled="false" port="5000" suspend="false"/>
+        <launchOrder-Sequence sequence="-1"/>
+        <stopOrder-Sequence sequence="-1"/>
+      </execution>
+      <inputport-instances>
+        <inputport-instance name="IN_PORT_1">
+          <description>Default event port added by Business Component Creation Wizard.</description>
+          <workflow datatype="2" type="1" enablecallout="false"/>
+          <jms>
+            <destination/>
+            <subscriber>
+              <transaction enabled="false"/>
+              <subscription durable="false"/>
+            </subscriber>
+          </jms>
+        </inputport-instance>
+      </inputport-instances>
+      <outputport-instances>
+        <outputport-instance name="ON_EXCEPTION">
+          <description>Used as an Exception Port</description>
+          <workflow datatype="2" type="1" enablecallout="false"/>
+          <schema root="{http://www.fiorano.com/fesb/activity/fault}Error">
+            <file>ISOMessageConverter2.ON_EXCEPTION.xsd</file>
+          </schema>
+          <jms>
+            <destination/>
+            <publisher>
+              <messages persistent="true"/>
+            </publisher>
+          </jms>
+        </outputport-instance>
+        <outputport-instance name="OUT_PORT_1">
+          <description>Default event port added by Business Component Creation Wizard.</description>
+          <workflow datatype="2" type="1" enablecallout="false"/>
+          <schema root="{http://www.fiorano.com/fesb/activity/ISOMessage}ISOMessage">
+            <file>ISOMessageConverter2.OUT_PORT_1.xsd</file>
+          </schema>
+          <jms>
+            <destination/>
+            <publisher>
+              <messages persistent="true"/>
+            </publisher>
+          </jms>
+          <transformation>
+            <script-file name="script.xml"/>
+            <project-file name="project"/>
+          </transformation>
+        </outputport-instance>
+      </outputport-instances>
+      <logmanager logger="java.util.logging.FileHandler">
+        <Param name="java.util.logging.FileHandler.limit">1000000</Param>
+        <Param name="java.util.logging.FileHandler.dir">logs</Param>
+        <Param name="fiorano.jms.log2.def.DefaultFormatter.dateformat">MM/dd/yyyy HH:mm:ss</Param>
+        <Param name="java.util.logging.FileHandler.count">4</Param>
+        <Param name="fiorano.jms.log2.def.DefaultFormatter.includetimestamp">true</Param>
+      </logmanager>
+      <logmodules>
+        <logmodule level="WARNING" name="ERR_HANDLER" uniqueNameRequired="true"/>
+        <logmodule level="INFO" name="OUT_HANDLER" uniqueNameRequired="true"/>
+        <logmodule level="WARNING" name="com.fiorano.edbc.isomessageconverter.iSOMessageConverter" uniqueNameRequired="true"/>
+      </logmodules>
+      <runtime-arguments>
+        <runtime-argument mandatory="false" name="JVM_PARAMS">
+          <value> -client -DLOG_TO_STREAM=true -Xrs</value>
+        </runtime-argument>
+        <runtime-argument inmemory="false" mandatory="false" name="JAVA_HOME"/>
+      </runtime-arguments>
+      <servicerefs/>
+    </inst>
+    <inst name="ISOMessageConverter1">
+      <service guid="ISOMessageConverter" version="1.0"/>
+      <config-file name="ISOMessageConverter1.xml"/>
+      <deployment nodes="fps"/>
+      <execution>
+        <debug enabled="false" port="5000" suspend="false"/>
+        <launchOrder-Sequence sequence="-1"/>
+        <stopOrder-Sequence sequence="-1"/>
+      </execution>
+      <inputport-instances>
+        <inputport-instance name="IN_PORT_1">
+          <description>Default event port added by Business Component Creation Wizard.</description>
+          <workflow datatype="2" type="0" enablecallout="false"/>
+          <schema root="{http://www.fiorano.com/fesb/activity/ISOMessage}ISOMessage">
+            <file>ISOMessageConverter1.IN_PORT_1.xsd</file>
+          </schema>
+          <jms>
+            <destination/>
+            <subscriber>
+              <transaction enabled="false"/>
+              <subscription durable="false"/>
+            </subscriber>
+          </jms>
+        </inputport-instance>
+      </inputport-instances>
+      <outputport-instances>
+        <outputport-instance name="ON_EXCEPTION">
+          <description>Used as an Exception Port</description>
+          <workflow datatype="2" type="1" enablecallout="false"/>
+          <schema root="{http://www.fiorano.com/fesb/activity/fault}Error">
+            <file>ISOMessageConverter1.ON_EXCEPTION.xsd</file>
+          </schema>
+          <jms>
+            <destination/>
+            <publisher>
+              <messages persistent="true"/>
+            </publisher>
+          </jms>
+        </outputport-instance>
+        <outputport-instance name="OUT_PORT_1">
+          <description>Default event port added by Business Component Creation Wizard.</description>
+          <workflow datatype="2" type="0" enablecallout="false"/>
+          <jms>
+            <destination/>
+            <publisher>
+              <messages persistent="true"/>
+            </publisher>
+          </jms>
+        </outputport-instance>
+      </outputport-instances>
+      <logmanager logger="java.util.logging.FileHandler">
+        <Param name="java.util.logging.FileHandler.limit">1000000</Param>
+        <Param name="java.util.logging.FileHandler.dir">logs</Param>
+        <Param name="fiorano.jms.log2.def.DefaultFormatter.dateformat">MM/dd/yyyy HH:mm:ss</Param>
+        <Param name="java.util.logging.FileHandler.count">4</Param>
+        <Param name="fiorano.jms.log2.def.DefaultFormatter.includetimestamp">true</Param>
+      </logmanager>
+      <logmodules>
+        <logmodule level="WARNING" name="ERR_HANDLER" uniqueNameRequired="true"/>
+        <logmodule level="INFO" name="OUT_HANDLER" uniqueNameRequired="true"/>
+        <logmodule level="WARNING" name="com.fiorano.edbc.isomessageconverter.iSOMessageConverter" uniqueNameRequired="true"/>
+      </logmodules>
+      <runtime-arguments>
+        <runtime-argument mandatory="false" name="JVM_PARAMS">
+          <value> -client -DLOG_TO_STREAM=true -Xrs</value>
+        </runtime-argument>
+        <runtime-argument inmemory="false" mandatory="false" name="JAVA_HOME"/>
+      </runtime-arguments>
+      <servicerefs/>
+    </inst>
+    <inst name="WebServiceConsumer1">
+      <service guid="WebServiceConsumer" version="4.0"/>
+      <short-description>This component invokes a web service (usually externally hosted on a third-party system) based on the configured WSDL</short-description>
+      <long-description>This component invokes a web service (usually externally hosted on a third-party system) based on the configured WSDL</long-description>
+      <config-file name="WebServiceConsumer1.xml"/>
+      <resource-properties>
+        <resource-property name="HTTP Password"></resource-property>
+        <resource-property name="End Point Address">http://localhost:8080/cancelThirdPartyEmailAddress</resource-property>
+        <resource-property name="HTTP Basic Authentication">false</resource-property>
+        <resource-property name="HTTP Username"></resource-property>
+        <resource-property name="WSDL URL">file:/F:/project/Africa/Rwanda/BOK/infacess/Delta%20API/Wsdl/cancelThirdPartyEmailAddress.wsdl</resource-property>
+        <resource-property name="Operation Name">cancelThirdPartyEmailAddress</resource-property>
+      </resource-properties>
+      <deployment nodes="fps"/>
+      <execution>
+        <debug enabled="false" port="5000" suspend="false"/>
+        <launchOrder-Sequence sequence="-1"/>
+        <stopOrder-Sequence sequence="-1"/>
+      </execution>
+      <inputport-instances>
+        <inputport-instance name="IN_PORT">
+          <description>Takes input xml required by WS</description>
+          <workflow datatype="2" type="1" enablecallout="false"/>
+          <schema root="{http://soprabanking.com/amplitude/cancelThirdPartyEmailAddress/Input}Envelope">
+            <file>WebServiceConsumer1.IN_PORT.xsd</file>
+          </schema>
+          <jms>
+            <destination/>
+            <subscriber>
+              <transaction enabled="false"/>
+              <subscription durable="false"/>
+            </subscriber>
+          </jms>
+        </inputport-instance>
+      </inputport-instances>
+      <outputport-instances>
+        <outputport-instance name="OUT_PORT">
+          <description>Gives the output of WS in XML format</description>
+          <workflow datatype="2" type="0" enablecallout="false"/>
+          <schema root="{http://soprabanking.com/amplitude/cancelThirdPartyEmailAddress/Output}Envelope">
+            <file>WebServiceConsumer1.OUT_PORT.xsd</file>
+          </schema>
+          <jms>
+            <destination/>
+            <publisher>
+              <messages persistent="true"/>
+            </publisher>
+          </jms>
+        </outputport-instance>
+        <outputport-instance name="ON_EXCEPTION">
+          <description>Used as an Exception Port</description>
+          <workflow datatype="2" type="1" enablecallout="false"/>
+          <schema root="{http://www.fiorano.com/fesb/activity/fault}Error">
+            <file>WebServiceConsumer1.ON_EXCEPTION.xsd</file>
+          </schema>
+          <jms>
+            <destination/>
+            <publisher>
+              <messages persistent="true"/>
+            </publisher>
+          </jms>
+        </outputport-instance>
+      </outputport-instances>
+      <logmanager logger="java.util.logging.FileHandler">
+        <Param name="java.util.logging.FileHandler.limit">1000000</Param>
+        <Param name="java.util.logging.FileHandler.dir">logs</Param>
+        <Param name="fiorano.jms.log2.def.DefaultFormatter.dateformat">MM/dd/yyyy HH:mm:ss</Param>
+        <Param name="java.util.logging.FileHandler.count">4</Param>
+        <Param name="fiorano.jms.log2.def.DefaultFormatter.includetimestamp">true</Param>
+      </logmanager>
+      <logmodules>
+        <logmodule level="OFF" name="com.fiorano.services.customencryption" uniqueNameRequired="true"/>
+        <logmodule name="com.fiorano.bc.trgateway" uniqueNameRequired="true"/>
+        <logmodule name="com.fiorano.webservices.invoker.cci.WSInvokerInteraction" uniqueNameRequired="true"/>
+        <logmodule name="fiorano.esb.adapter.jca.dii.webserviceconsumer.monitor" uniqueNameRequired="true"/>
+        <logmodule level="INFO" name="OUT_HANDLER" uniqueNameRequired="true"/>
+        <logmodule name="com.fiorano.webservices.invoker.spi.outbound.WSInvokerManagedConnectionFactory" uniqueNameRequired="true"/>
+        <logmodule name="ERR_HANDLER" uniqueNameRequired="true"/>
+      </logmodules>
+      <runtime-arguments>
+        <runtime-argument inmemory="false" mandatory="false" name="JVM_PARAMS">
+          <value> -client -DLOG_TO_STREAM=true -Xrs</value>
+        </runtime-argument>
+        <runtime-argument inmemory="false" mandatory="false" name="JAVA_HOME"/>
+      </runtime-arguments>
+      <servicerefs/>
+    </inst>
+    <inst name="EMP">
+      <service guid="WebServiceConsumer" version="4.0"/>
+      <short-description>This component invokes a web service (usually externally hosted on a third-party system) based on the configured WSDL</short-description>
+      <long-description>This component invokes a web service (usually externally hosted on a third-party system) based on the configured WSDL</long-description>
+      <deployment nodes="fps"/>
+      <execution>
+        <debug enabled="false" port="5000" suspend="false"/>
+        <launchOrder-Sequence sequence="-1"/>
+        <stopOrder-Sequence sequence="-1"/>
+      </execution>
+      <inputport-instances>
+        <inputport-instance name="IN_PORT">
+          <description>Takes input xml required by WS</description>
+          <workflow datatype="2" type="0" enablecallout="false"/>
+          <jms>
+            <destination/>
+            <subscriber>
+              <transaction enabled="false"/>
+              <subscription durable="false"/>
+            </subscriber>
+          </jms>
+        </inputport-instance>
+      </inputport-instances>
+      <outputport-instances>
+        <outputport-instance name="OUT_PORT">
+          <description>Gives the output of WS in XML format</description>
+          <workflow datatype="2" type="0" enablecallout="false"/>
+          <jms>
+            <destination/>
+            <publisher>
+              <messages persistent="true"/>
+            </publisher>
+          </jms>
+        </outputport-instance>
+        <outputport-instance name="ON_EXCEPTION">
+          <description>Used as an Exception Port</description>
+          <workflow datatype="2" type="1" enablecallout="false"/>
+          <schema root="{http://www.fiorano.com/fesb/activity/fault}Error">
+            <file>EMP.ON_EXCEPTION.xsd</file>
+          </schema>
+          <jms>
+            <destination/>
+            <publisher>
+              <messages persistent="true"/>
+            </publisher>
+          </jms>
+        </outputport-instance>
+      </outputport-instances>
+      <logmanager logger="java.util.logging.FileHandler">
+        <Param name="java.util.logging.FileHandler.limit">1000000</Param>
+        <Param name="java.util.logging.FileHandler.dir">logs</Param>
+        <Param name="fiorano.jms.log2.def.DefaultFormatter.dateformat">MM/dd/yyyy HH:mm:ss</Param>
+        <Param name="java.util.logging.FileHandler.count">4</Param>
+        <Param name="fiorano.jms.log2.def.DefaultFormatter.includetimestamp">true</Param>
+      </logmanager>
+      <logmodules>
+        <logmodule level="OFF" name="com.fiorano.services.customencryption" uniqueNameRequired="true"/>
+        <logmodule name="com.fiorano.bc.trgateway" uniqueNameRequired="true"/>
+        <logmodule name="com.fiorano.webservices.invoker.cci.WSInvokerInteraction" uniqueNameRequired="true"/>
+        <logmodule name="fiorano.esb.adapter.jca.dii.webserviceconsumer.monitor" uniqueNameRequired="true"/>
+        <logmodule level="INFO" name="OUT_HANDLER" uniqueNameRequired="true"/>
+        <logmodule name="com.fiorano.webservices.invoker.spi.outbound.WSInvokerManagedConnectionFactory" uniqueNameRequired="true"/>
+        <logmodule name="ERR_HANDLER" uniqueNameRequired="true"/>
+      </logmodules>
+      <runtime-arguments>
+        <runtime-argument inmemory="false" mandatory="false" name="JVM_PARAMS">
+          <value> -client -DLOG_TO_STREAM=true -Xrs</value>
+        </runtime-argument>
+        <runtime-argument inmemory="false" mandatory="false" name="JAVA_HOME"/>
+      </runtime-arguments>
+      <servicerefs/>
+    </inst>
+    <inst name="WebServiceConsumer2">
+      <service guid="WebServiceConsumer" version="4.0"/>
+      <short-description>This component invokes a web service (usually externally hosted on a third-party system) based on the configured WSDL</short-description>
+      <long-description>This component invokes a web service (usually externally hosted on a third-party system) based on the configured WSDL</long-description>
+      <config-file name="WebServiceConsumer2.xml"/>
+      <resource-properties>
+        <resource-property name="End Point Address">https://10.102.149.195:9095/getAccountHistoryMovementList</resource-property>
+        <resource-property name="HTTP Password">fIdBh3komne+sg7IztHdjw==</resource-property>
+        <resource-property name="HTTP Basic Authentication">true</resource-property>
+        <resource-property name="Operation Name">getAccountHistoryMovementList</resource-property>
+        <resource-property name="HTTP Username">admin</resource-property>
+        <resource-property name="WSDL URL">https://10.102.149.195:9095/getAccountHistoryMovementList?wsdl</resource-property>
+      </resource-properties>
+      <deployment nodes="fps"/>
+      <execution>
+        <debug enabled="false" port="5000" suspend="false"/>
+        <launchOrder-Sequence sequence="-1"/>
+        <stopOrder-Sequence sequence="-1"/>
+      </execution>
+      <inputport-instances>
+        <inputport-instance name="IN_PORT">
+          <description>Takes input xml required by WS</description>
+          <workflow datatype="2" type="0" enablecallout="false"/>
+          <schema root="{http://soprabanking.com/amplitude/getAccountHistoryMovementList/Input}Envelope">
+            <file>WebServiceConsumer2.IN_PORT.xsd</file>
+            <schemarefs>
+              <schemaref uri="http://soprabanking.com/amplitude">
+                <file>WebServiceConsumer2.IN_PORT.1.xsd</file>
+              </schemaref>
+            </schemarefs>
+          </schema>
+          <jms>
+            <destination/>
+            <subscriber>
+              <transaction enabled="false"/>
+              <subscription durable="false"/>
+            </subscriber>
+          </jms>
+        </inputport-instance>
+      </inputport-instances>
+      <outputport-instances>
+        <outputport-instance name="OUT_PORT">
+          <description>Gives the output of WS in XML format</description>
+          <workflow datatype="2" type="0" enablecallout="false"/>
+          <schema root="{http://soprabanking.com/amplitude/getAccountHistoryMovementList/Output}Envelope">
+            <file>WebServiceConsumer2.OUT_PORT.xsd</file>
+            <schemarefs>
+              <schemaref uri="http://soprabanking.com/amplitude">
+                <file>WebServiceConsumer2.IN_PORT.1.xsd</file>
+              </schemaref>
+            </schemarefs>
+          </schema>
+          <jms>
+            <destination/>
+            <publisher>
+              <messages persistent="true"/>
+            </publisher>
+          </jms>
+        </outputport-instance>
+        <outputport-instance name="ON_EXCEPTION">
+          <description>Used as an Exception Port</description>
+          <workflow datatype="2" type="1" enablecallout="false"/>
+          <schema root="{http://www.fiorano.com/fesb/activity/fault}Error">
+            <file>WebServiceConsumer2.ON_EXCEPTION.xsd</file>
+          </schema>
+          <jms>
+            <destination/>
+            <publisher>
+              <messages persistent="true"/>
+            </publisher>
+          </jms>
+        </outputport-instance>
+      </outputport-instances>
+      <logmanager logger="java.util.logging.FileHandler">
+        <Param name="java.util.logging.FileHandler.limit">1000000</Param>
+        <Param name="java.util.logging.FileHandler.dir">logs</Param>
+        <Param name="fiorano.jms.log2.def.DefaultFormatter.dateformat">MM/dd/yyyy HH:mm:ss</Param>
+        <Param name="java.util.logging.FileHandler.count">4</Param>
+        <Param name="fiorano.jms.log2.def.DefaultFormatter.includetimestamp">true</Param>
+      </logmanager>
+      <logmodules>
+        <logmodule level="OFF" name="com.fiorano.services.customencryption" uniqueNameRequired="true"/>
+        <logmodule name="com.fiorano.bc.trgateway" uniqueNameRequired="true"/>
+        <logmodule name="com.fiorano.webservices.invoker.cci.WSInvokerInteraction" uniqueNameRequired="true"/>
+        <logmodule name="fiorano.esb.adapter.jca.dii.webserviceconsumer.monitor" uniqueNameRequired="true"/>
+        <logmodule level="INFO" name="OUT_HANDLER" uniqueNameRequired="true"/>
+        <logmodule name="com.fiorano.webservices.invoker.spi.outbound.WSInvokerManagedConnectionFactory" uniqueNameRequired="true"/>
+        <logmodule name="ERR_HANDLER" uniqueNameRequired="true"/>
+      </logmodules>
+      <runtime-arguments>
+        <runtime-argument inmemory="false" mandatory="false" name="JVM_PARAMS">
+          <value> -client -DLOG_TO_STREAM=true -Xrs</value>
+        </runtime-argument>
+        <runtime-argument inmemory="false" mandatory="false" name="JAVA_HOME"/>
+      </runtime-arguments>
+      <servicerefs/>
+    </inst>
+  </service-instances>
+  <routes>
+    <route name="route1">
+      <source inst="ATMListner" port="OUT_PORT"/>
+      <target inst="ISOMessageConverter2" port="IN_PORT_1"/>
+      <messages durabilitySource="Application"/>
+      <logmodules/>
+    </route>
+    <route name="route4">
+      <source inst="ISOMessageConverter1" port="OUT_PORT_1"/>
+      <target inst="ATMListner" port="IN_PORT"/>
+      <messages durabilitySource="Application"/>
+      <logmodules/>
+    </route>
+    <route name="route6">
+      <source inst="WebServiceConsumer1" port="OUT_PORT"/>
+      <target inst="ISOMessageConverter1" port="IN_PORT_1"/>
+      <messages durabilitySource="Application"/>
+      <logmodules/>
+    </route>
+    <route name="route2">
+      <source inst="ISOMessageConverter2" port="OUT_PORT_1"/>
+      <target inst="EMP" port="IN_PORT"/>
+      <messages durabilitySource="Application"/>
+      <selectors>
+        <selector type="body"><xpath query="(/ns1:ISOMessage/ns1:Fields/ns1:field_5 = '0001')">
+            <namespaces>
+              <namespace prefix="ns2">http://www.w3.org/2001/XMLSchema</namespace>
+              <namespace prefix="ns1">http://www.fiorano.com/fesb/activity/ISOMessage</namespace>
+            </namespaces>
+          </xpath></selector>
+      </selectors>
+      <logmodules/>
+    </route>
+    <route name="route3">
+      <source inst="EMP" port="OUT_PORT"/>
+      <target inst="ISOMessageConverter1" port="IN_PORT_1"/>
+      <messages durabilitySource="Application"/>
+      <selectors>
+        <selector type="jms">error='1'</selector>
+      </selectors>
+      <logmodules/>
+    </route>
+    <route name="route5">
+      <source inst="EMP" port="OUT_PORT"/>
+      <target inst="WebServiceConsumer1" port="IN_PORT"/>
+      <messages durabilitySource="Application"/>
+      <selectors>
+        <selector type="jms">error='0'</selector>
+      </selectors>
+      <logmodules/>
+    </route>
+  </routes>
+  <durableRoute/>
+  <deleteDestinationAfterStop/>
+  <Metadata productVersion="12" buildNo="12160" createdBy="admin"/>
+</application>
