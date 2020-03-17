@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ASCII"?>
+<layout>
+  <subflow name="FIORANO.ESTUDIO.ROOT_FLOW" x="0" y="0">
+    <service-instance name="P1_c3" x="614" y="52"/>
+    <service-instance name="P1_RESTStub1" x="161" y="54"/>
+    <service-instance name="P1_c2" x="465" y="59"/>
+    <service-instance name="P1_c1" x="319" y="59"/>
+    <service-instance name="P2_c4" x="633" y="179"/>
+    <service-instance name="P2_RESTStub2" x="175" y="183"/>
+    <service-instance name="P2_c5" x="476" y="179"/>
+    <service-instance name="P2_c6" x="345" y="186"/>
+    <service-instance name="P3_c7" x="628" y="305"/>
+    <service-instance name="P3_RESTStub3" x="182" y="295"/>
+    <service-instance name="P3_c8" x="472" y="316"/>
+    <service-instance name="P3_c9" x="329" y="316"/>
+  </subflow>
+  <shortcut-routes/>
+</layout>

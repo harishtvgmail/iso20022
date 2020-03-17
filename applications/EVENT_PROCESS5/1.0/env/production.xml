@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<target:target xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:target="http://fiorano.com/environment/1.0" xsi:schemaLocation="http://fiorano.com/environment/1.0 env.xsd">
+  <target:instance name="P1_RESTStub1">
+    <target:instance-properties>
+      <target:deployment cache="true" nodes="apigateway"/>
+    </target:instance-properties>
+  </target:instance>
+  <target:instance name="P1_c1">
+    <target:instance-properties>
+      <target:deployment cache="true" nodes="apigateway"/>
+    </target:instance-properties>
+  </target:instance>
+  <target:instance name="P1_c2">
+    <target:instance-properties>
+      <target:deployment cache="true" nodes="apigateway"/>
+    </target:instance-properties>
+  </target:instance>
+  <target:instance name="P1_c3">
+    <target:instance-properties>
+      <target:deployment cache="true" nodes="apigateway"/>
+    </target:instance-properties>
+  </target:instance>
+  <target:instance name="P2_RESTStub2">
+    <target:instance-properties>
+      <target:deployment cache="true" nodes="apigateway"/>
+    </target:instance-properties>
+  </target:instance>
+  <target:instance name="P2_c6">
+    <target:instance-properties>
+      <target:deployment cache="true" nodes="apigateway"/>
+    </target:instance-properties>
+  </target:instance>
+  <target:instance name="P2_c5">
+    <target:instance-properties>
+      <target:deployment cache="true" nodes="apigateway"/>
+    </target:instance-properties>
+  </target:instance>
+  <target:instance name="P2_c4">
+    <target:instance-properties>
+      <target:deployment cache="true" nodes="apigateway"/>
+    </target:instance-properties>
+  </target:instance>
+  <target:instance name="P3_RESTStub3">
+    <target:instance-properties>
+      <target:deployment cache="true" nodes="apigateway"/>
+    </target:instance-properties>
+  </target:instance>
+  <target:instance name="P3_c9">
+    <target:instance-properties>
+      <target:deployment cache="true" nodes="apigateway"/>
+    </target:instance-properties>
+  </target:instance>
+  <target:instance name="P3_c8">
+    <target:instance-properties>
+      <target:deployment cache="true" nodes="apigateway"/>
+    </target:instance-properties>
+  </target:instance>
+  <target:instance name="P3_c7">
+    <target:instance-properties>
+      <target:deployment cache="true" nodes="apigateway"/>
+    </target:instance-properties>
+  </target:instance>
+</target:target>
